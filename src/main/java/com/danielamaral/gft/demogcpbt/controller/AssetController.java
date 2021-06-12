@@ -2,6 +2,7 @@ package com.danielamaral.gft.demogcpbt.controller;
 
 import com.danielamaral.gft.demogcpbt.configuration.Configuration;
 import com.danielamaral.gft.demogcpbt.model.Asset;
+import com.danielamaral.gft.demogcpbt.service.BigtableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +16,9 @@ public class AssetController {
     @Autowired
     Configuration configuration;
 
+    @Autowired
+    BigtableService bigtableService;
+
 
 
     @GetMapping("/asset/{assetKey}")
@@ -25,12 +29,13 @@ public class AssetController {
     @GetMapping("/asset/{assetKey}/start/{start}/end/{end}")
     public List<Asset> getAssetByRange(@PathVariable String assetKey, @PathVariable String start, @PathVariable String end) {
 
-        List<Asset> assetList = new ArrayList<>();
-        return assetList;
+        return bigtableService.getRecordsByKeyRange(assetKey.concat("-").concat(start),assetKey.concat("-").concat(end));
+
     }
 
     @PostMapping("/asset/load")
     public void loadAsset() {
+        bigtableService.loadData();
     }
 
     @GetMapping("/admin/config")
@@ -40,6 +45,6 @@ public class AssetController {
 
     @PostMapping("/admin/table")
     public void createTable() {
-
+        bigtableService.createTable();
     }
 }

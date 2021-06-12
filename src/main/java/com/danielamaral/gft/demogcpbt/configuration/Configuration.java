@@ -12,5 +12,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class Configuration {
     private String message1;
+    private String btProjectId;
+    private String btInstanceId;
+    private String btTable;
+    private String btFamilyName;
+
 
 }
