@@ -1,6 +1,8 @@
 package com.danielamaral.gft.demogcpbt.controller;
 
+import com.danielamaral.gft.demogcpbt.configuration.Configuration;
 import com.danielamaral.gft.demogcpbt.model.Asset;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -9,6 +11,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/v1/api")
 public class AssetController {
+
+    @Autowired
+    Configuration configuration;
+
 
 
     @GetMapping("/asset/{assetKey}")
@@ -29,7 +35,7 @@ public class AssetController {
 
     @GetMapping("/admin/config")
     public String getConfiguration() {
-        return "config";
+        return configuration.toString();
     }
 
     @PostMapping("/admin/table")
